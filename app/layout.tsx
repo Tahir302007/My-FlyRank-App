@@ -12,6 +12,7 @@ export default function RootLayout({
         {/* Üst Naviqasiya Menyusu */}
         <nav className="bg-white border-b p-4 flex gap-6 justify-center">
           <Link href="/" className="hover:text-blue-600 font-medium">Home</Link>
+          <Link href="/kanban" className="hover:text-blue-600 font-medium">Kanban Board</Link>
           <Link href="/settings" className="hover:text-blue-600 font-medium">Settings</Link>
           <Link href="/health" className="hover:text-blue-600 font-medium">Health Check</Link>
         </nav>
