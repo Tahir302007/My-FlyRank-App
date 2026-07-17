@@ -23,5 +23,6 @@ export const Disclosure: React.FC<DisclosureProps> = ({ title, children }) => {
           {children}
         </div>
       )}
-    );
-};
+    </div>
+    )
+}
