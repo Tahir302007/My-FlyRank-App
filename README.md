@@ -34,3 +34,15 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## AI Tool Contracts
+
+### `scoreProject` Tool
+* **Description:** Evaluates and scores a frontend project repository on performance and accessibility metrics.
+* **Schema (Zod):**
+  - `projectName` (string): Name of the target project.
+  - `performanceScore` (number): Score ranging from 0 to 100.
+  - `accessibilityScore` (number): Score ranging from 0 to 100.
+  - `status` ('excellent' | 'needs_work' | 'critical'): Overall project health classification.
+  - `recommendation` (string): Actionable optimization suggestion.
+* **Return Shape:** Returns an object containing calculated metric scores, status badge type, actionable tips, and execution timestamp. Rendered dynamically via a custom UI scorecard component.
