@@ -48,3 +48,20 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
     status: z.enum(['excellent', 'needs_work', 'critical']),
     recommendation: z.string().describe('Actionable optimization suggestion'),
   })
+
+
+  ## Motion & State Transitions: Action Button
+
+### State Choreography
+The button manages 5 explicit operational states:
+1. **Idle:** Baseline interactive ready state.
+2. **Hover / Focus:** Elevation via `-translate-y-0.5` and a visible `focus-visible:ring-4` outline for high accessibility.
+3. **Loading:** Micro-spinner display with disabled pointer-events to prevent spam clicking.
+4. **Success:** Smooth transition into an emerald confirmation checkmark before returning to idle.
+5. **Error:** Color shift to rose with a single subtle horizontal shake animation.
+
+### Motion Decisions
+* **Easing:** Utilized custom `cubic-bezier(0.16, 1, 0.3, 1)` easing curve for an immediate tactile response without harsh snapping.
+* **Duration:** 300ms for state transitions to balance responsiveness with clear visual feedback.
+* **Compositor Efficiency:** Animated properties are strictly limited to `opacity` and `transform` to ensure zero layout recalculation.
+* **Reduced Motion Support:** Motion animations like shaking are disabled under `@media (prefers-reduced-motion: reduce)` while preserving distinct state color changes.
