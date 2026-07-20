@@ -1,38 +1,44 @@
-import { createOpenAI } from '@ai-sdk/openai';
-import { streamText, tool } from 'ai';
-import { z } from 'zod';
+import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+  try {
+    const { message } = await req.json();
 
-  const result = streamText({
-    model: 'gpt-4o-mini', // və ya istifadə etdiyin başqa model
-    messages,
-    tools: {
-      // Sənin xüsusi alətin: Məsələn, layihənin analitika xalını hesablayır
-      scoreProject: tool({
-        description: 'Evaluates and scores a frontend project build or repository.',
-        parameters: z.object({
-          projectName: z.string().describe('The name of the project'),
-          performanceScore: z.number().min(0).max(100).describe('Performance score out of 100'),
-          accessibilityScore: z.number().min(0).max(100).describe('Accessibility score out of 100'),
-          status: z.enum(['excellent', 'needs_work', 'critical']).describe('Project health status'),
-          recommendation: z.string().describe('Key actionable tip for improvement'),
-        }),
-        execute: async ({ projectName, performanceScore, accessibilityScore, status, recommendation }) => {
-          // Burada simulyasiya edilmiş cavab qaytarılır
-          return {
-            projectName,
-            performanceScore,
-            accessibilityScore,
-            status,
-            recommendation,
-            timestamp: new Date().toISOString(),
-          };
-        },
-      }),
-    },
-  });
+    // 1. Düzgün məlumat göndərildiyini yoxlayan daxili simulyasiya
+    if (!message || message.trim() === '') {
+      return NextResponse.json(
+        { error: 'Input message is required for analysis.' },
+        { status: 400 }
+      );
+    }
 
-  return result.toDataStreamResponse();
+    // 2. Qəsdən xəta simulyasiyası (İstifadəçi 'error' yazsa, xəta state-ni göstərmək üçün)
+    if (message.toLowerCase().includes('error')) {
+      return NextResponse.json(
+        { error: 'Failed to fetch project metrics: Connection timeout.' },
+        { status: 500 }
+      );
+    }
+
+    // 3. Uğurlu Alət (Tool) Nəticəsi
+    const mockToolResult = {
+      toolName: 'scoreProject',
+      state: 'output_available',
+      data: {
+        projectName: 'Kanban Task Manager',
+        performanceScore: 94,
+        accessibilityScore: 98,
+        status: 'excellent',
+        recommendation: 'Optimize client-side image bundles to improve initial load time by 150ms.',
+        timestamp: new Date().toISOString(),
+      },
+    };
+
+    return NextResponse.json(mockToolResult);
+  } catch (err) {
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 }
+    );
+  }
 }

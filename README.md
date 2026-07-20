@@ -35,14 +35,16 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-## AI Tool Contracts
+## AI Tool Specification: `scoreProject`
 
-### `scoreProject` Tool
-* **Description:** Evaluates and scores a frontend project repository on performance and accessibility metrics.
-* **Schema (Zod):**
-  - `projectName` (string): Name of the target project.
-  - `performanceScore` (number): Score ranging from 0 to 100.
-  - `accessibilityScore` (number): Score ranging from 0 to 100.
-  - `status` ('excellent' | 'needs_work' | 'critical'): Overall project health classification.
-  - `recommendation` (string): Actionable optimization suggestion.
-* **Return Shape:** Returns an object containing calculated metric scores, status badge type, actionable tips, and execution timestamp. Rendered dynamically via a custom UI scorecard component.
+* **Name:** `scoreProject`
+* **Description:** Audits the current frontend workspace metrics and returns performance/accessibility scores.
+* **Zod Schema Contract:**
+  ```typescript
+  z.object({
+    projectName: z.string().describe('Target project workspace name'),
+    performanceScore: z.number().min(0).max(100),
+    accessibilityScore: z.number().min(0).max(100),
+    status: z.enum(['excellent', 'needs_work', 'critical']),
+    recommendation: z.string().describe('Actionable optimization suggestion'),
+  })
