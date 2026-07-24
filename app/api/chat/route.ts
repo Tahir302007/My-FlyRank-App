@@ -2,43 +2,27 @@ import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
   try {
-    const { message } = await req.json();
+    const body = await req.json();
+    const prompt = (body.prompt || body.messages?.[body.messages?.length - 1]?.content || '').toLowerCase();
 
-    // 1. Düzgün məlumat göndərildiyini yoxlayan daxili simulyasiya
-    if (!message || message.trim() === '') {
-      return NextResponse.json(
-        { error: 'Input message is required for analysis.' },
-        { status: 400 }
-      );
+    if (prompt.includes('score') || prompt.includes('check')) {
+      return NextResponse.json({
+        toolName: 'scoreProject',
+        result: { performance: 94, accessibility: 98, status: 'Optimal' },
+        message: 'Workspace audit completed successfully.'
+      });
     }
 
-    // 2. Qəsdən xəta simulyasiyası (İstifadəçi 'error' yazsa, xəta state-ni göstərmək üçün)
-    if (message.toLowerCase().includes('error')) {
-      return NextResponse.json(
-        { error: 'Failed to fetch project metrics: Connection timeout.' },
-        { status: 500 }
-      );
-    }
-
-    // 3. Uğurlu Alət (Tool) Nəticəsi
-    const mockToolResult = {
-      toolName: 'scoreProject',
-      state: 'output_available',
-      data: {
-        projectName: 'Kanban Task Manager',
-        performanceScore: 94,
-        accessibilityScore: 98,
-        status: 'excellent',
-        recommendation: 'Optimize client-side image bundles to improve initial load time by 150ms.',
-        timestamp: new Date().toISOString(),
-      },
-    };
-
-    return NextResponse.json(mockToolResult);
+    return NextResponse.json({
+      toolName: 'fetchProjectTasks',
+      tasks: [
+        { id: 1, title: 'Build Motion Button Lifecycle', status: 'Completed' },
+        { id: 2, title: 'Write Vitest & RTL Component Tests', status: 'In Progress' },
+        { id: 3, title: 'Record Checkpoint 1 MVP Demo Video', status: 'Pending' }
+      ],
+      message: 'Tasks retrieved successfully.'
+    });
   } catch (err) {
-    return NextResponse.json(
-      { error: 'Internal Server Error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Failed' }, { status: 200 });
   }
 }

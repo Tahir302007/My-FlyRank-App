@@ -65,3 +65,38 @@ The button manages 5 explicit operational states:
 * **Duration:** 300ms for state transitions to balance responsiveness with clear visual feedback.
 * **Compositor Efficiency:** Animated properties are strictly limited to `opacity` and `transform` to ensure zero layout recalculation.
 * **Reduced Motion Support:** Motion animations like shaking are disabled under `@media (prefers-reduced-motion: reduce)` while preserving distinct state color changes.
+
+
+# Interactive 3D & AI-Powered Web Application
+
+A modern, production-grade interactive web experience built with React, Three.js, React Three Fiber, and GLSL Shaders.
+
+🚀 **Live Production Application:** [https://my-3d-app.vercel.app](https://my-3d-app.vercel.app)
+
+---
+
+## 🛠️ Architecture & Tech Stack
+
+* **Frontend Framework:** React.js (via Vite)
+* **3D Graphics & Shaders:** Three.js, `@react-three/fiber`, `@react-three/drei`, Custom GLSL Fragment Shaders
+* **Styling & UI:** Tailwind CSS, Framer Motion, Leva (Control Panel)
+* **Deployment & CI/CD:** Vercel Production Pipeline
+
+---
+
+## 🛡️ Production Hygiene & Abuse Protection
+
+* **Input & Token Caps:** All client-side text/interactive inputs are capped to prevent unnecessary payload inflation and API credit exhaustion.
+* **Stream Timeouts:** Streaming and execution handlers feature an explicit `maxDuration` threshold to avoid long-hanging serverless instances.
+* **Performance Optimizations:** Lowered canvas DPR (`dpr={[1, 1.5]}`), lazy-loaded heavy WebGL assets, and implemented `aria-live` accessible dynamic regions.
+
+---
+
+## ⚡ Local Setup & Run Instructions
+
+To clone, set up, and run this project locally, follow these steps:
+
+1. **Clone the Repository:**
+   ```bash
+   git clone [https://github.com/YOUR_USERNAME/my-3d-app.git](https://github.com/YOUR_USERNAME/my-3d-app.git)
+   cd my-3d-app

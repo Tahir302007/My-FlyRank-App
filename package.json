@@ -10,10 +10,12 @@
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^4.0.15",
-    "ai": "^7.0.30",
-    "next": "^9.3.3",
+    "@ai-sdk/openai": "^4.0.17",
+    "ai": "^7.0.33",
+    "next": "^16.2.10",
     "react": "^19.2.7",
-    "react-dom": "^19.2.7"
+    "react-dom": "^19.2.7",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
